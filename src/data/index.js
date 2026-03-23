@@ -8,6 +8,7 @@ import todoListImage from "../../public/images/todolist.png";
 import storyImage from "../../public/images/story.png";
 import leonImage from "../../public/images/leon.png";
 import noPreviewImage from "../../public/images/nopreview.png";
+import myWebsiteImage from "../../public/images/mywebsite.png";
 
 export const NAV_LINKS = [
   { label: "About", path: "/" },
@@ -32,6 +33,17 @@ export const PROFILE_IMAGE =
 export const PROJECTS = [
   {
     id: 1,
+    title: "Portfolio",
+    description:
+      "A personal portfolio showcasing my work in building responsive and user-friendly web interfaces using modern technologies like React and Next.js. The site highlights my projects, technical skills, and practical experience, along with a basic understanding of backend development to support full-stack workflows.",
+    tags: ["React", "RHF", "MUI"],
+    keyword: "react",
+    image: myWebsiteImage,
+    liveLink: "https://ayman-osama.vercel.app/",
+    githubLink: "https://github.com/Ayman2002Dev/Portfolio",
+  },
+  {
+    id: 2,
     title: "Veloria",
     description:
       "A modern e-commerce platform built with React and modern web technologies, featuring product browsing, cart management, and secure checkout.",
@@ -42,7 +54,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/Veloria",
   },
   {
-    id: 2,
+    id: 3,
     title: "Cinema Scope",
     description:
       "Cinema-Scope is a modern movie platform where users can discover, search, and explore films easily. Browse movies by genre, country, or category, check ratings, release dates, and detailed information, and stay updated with popular, top-rated, and now-playing movies.",
@@ -54,7 +66,7 @@ export const PROJECTS = [
   },
 
   {
-    id: 3,
+    id: 4,
     title: "WindFlow",
     description:
       "Windflow is a website where you can easily find out the weather conditions.",
@@ -65,7 +77,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/WindFlow",
   },
   {
-    id: 4,
+    id: 5,
     title: "Tic-Tac-Toe",
     description:
       "Tic Tac Toe game with dynamic score tracking, reset functionality, and seamless new game start.",
@@ -76,7 +88,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/Tic-Tac-Toe",
   },
   {
-    id: 5,
+    id: 6,
     title: "Ecomerce-Api",
     description:
       "An E-commerce API featuring token-based authentication, product management (add, update, delete), user roles with admin and user permissions, and full cart operations including user management.",
@@ -99,7 +111,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/Ecommerce-api/tree/main",
   },
   {
-    id: 6,
+    id: 7,
     title: "ToDo List",
     description:
       "A dynamic To-Do List application that lets you organize tasks with drag-and-drop functionality. Easily move tasks between stages—Pending, In Progress, and Complete—while keeping track of priorities and progress. Built for a smooth and interactive user experience.",
@@ -110,7 +122,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/to-do-drag-and-drop",
   },
   {
-    id: 7,
+    id: 8,
     title: "Product Management System",
     description:
       "A Product Management app to add, update, and delete products while tracking total quantity, total price, total values, total products, and average price.",
@@ -121,7 +133,7 @@ export const PROJECTS = [
     githubLink: "https://ayman2002dev.github.io/Product-Management-System/",
   },
   {
-    id: 8,
+    id: 9,
     title: "Story",
     description:
       "A personal Story Website to share my life experiences, books I’m reading, games I’m playing, and other stories and events.",
@@ -132,7 +144,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/Story-website",
   },
   {
-    id: 9,
+    id: 10,
     title: "Kasper",
     description:
       "A demo project to improve my web design skills and gain practical experience.",
@@ -144,7 +156,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/Kasper",
   },
   {
-    id: 10,
+    id: 11,
     title: "Leon",
     description:
       "A demo project to improve my web design skills and gain practical experience.",
@@ -155,7 +167,7 @@ export const PROJECTS = [
     githubLink: "https://github.com/Ayman2002Dev/Leon",
   },
   {
-    id: 11,
+    id: 12,
     title: "Tracer",
     description:
       "A face recognition-based attendance system that automates tracking and provides students with access to their records, grades, and task evaluations.",
