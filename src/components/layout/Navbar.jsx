@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import myLogo from "../../../public/images/mylogo-rbg.png";
+import myLogo from "../../../public/images/mylogo-rbg.webp";
 import {
   AppBar,
   Box,

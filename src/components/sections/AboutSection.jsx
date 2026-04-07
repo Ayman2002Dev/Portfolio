@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import TerminalIcon from "@mui/icons-material/Terminal";
-import PROFILE_IMAGE from "../../../public/images/person.png";
+import PROFILE_IMAGE from "../../../public/images/person.webp";
 
 const cardBase = {
   backgroundColor: "#0f1930",

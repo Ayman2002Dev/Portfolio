@@ -114,6 +114,7 @@ export default function HeroSection() {
             fontFamily: '"Space Grotesk", sans-serif',
             fontWeight: 700,
             fontSize: { xs: "3rem", sm: "4.5rem", md: "6rem" },
+            fontDisplay: "swap",
             letterSpacing: "-0.025em",
             color: "#dee5ff",
             lineHeight: 1.05,

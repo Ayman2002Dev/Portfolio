@@ -1,14 +1,14 @@
-import veloriaImage from "../../public/images/veloria.png";
-import cinemaScopeImage from "../../public/images/cinema-scope.png";
-import windflowImage from "../../public/images/windflow.png";
-import ProductMSImage from "../../public/images/product-management-system.png";
-import kasperImage from "../../public/images/kasper.png";
-import ticTacToeImage from "../../public/images/tic-tac-toe.png";
-import todoListImage from "../../public/images/todolist.png";
-import storyImage from "../../public/images/story.png";
-import leonImage from "../../public/images/leon.png";
-import noPreviewImage from "../../public/images/nopreview.png";
-import myWebsiteImage from "../../public/images/mywebsite.png";
+import veloriaImage from "../../public/images/veloria.webp";
+import cinemaScopeImage from "../../public/images/cinema-scope.webp";
+import windflowImage from "../../public/images/windflow.webp";
+import ProductMSImage from "../../public/images/product-management-system.webp";
+import kasperImage from "../../public/images/kasper.webp";
+import ticTacToeImage from "../../public/images/tic-tac-toe.webp";
+import todoListImage from "../../public/images/todolist.webp";
+import storyImage from "../../public/images/story.webp";
+import leonImage from "../../public/images/leon.webp";
+import noPreviewImage from "../../public/images/nopreview.webp";
+import myWebsiteImage from "../../public/images/mywebsite.webp";
 
 export const NAV_LINKS = [
   { label: "About", path: "/" },

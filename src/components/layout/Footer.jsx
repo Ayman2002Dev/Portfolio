@@ -1,6 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import { SOCIAL_LINKS } from "../../data";
-import myLogo from "../../../public/images/mylogo-rbg.png";
+import myLogo from "../../../public/images/mylogo-rbg.webp";
 
 export default function Footer() {
   return (
