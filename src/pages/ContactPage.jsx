@@ -245,16 +245,38 @@ export default function ContactPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setSubmitting(true);
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1500));
-    setSubmitting(false);
-    reset();
-    setSnackbar({
-      open: true,
-      message: "Message sent! I'll be in touch soon.",
-      severity: "success",
-    });
+    try {
+      const formData = new FormData();
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+
+      setSubmitting(true);
+      // Simulate API call
+      const response = await fetch(
+        "https://hooks.zapier.com/hooks/catch/27009778/u7tezl2/",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      console.log(response);
+
+      // reset();
+      setSnackbar({
+        open: true,
+        message: "Message sent! I'll be in touch soon.",
+        severity: "success",
+      });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Faild to send message. Please try again later.",
+        severity: "error",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
