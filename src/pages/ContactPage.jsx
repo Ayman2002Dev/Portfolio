@@ -252,7 +252,6 @@ export default function ContactPage() {
       });
 
       setSubmitting(true);
-      // Simulate API call
       const response = await fetch(
         "https://hooks.zapier.com/hooks/catch/27009778/u7tezl2/",
         {
@@ -260,14 +259,14 @@ export default function ContactPage() {
           body: formData,
         },
       );
-      console.log(response);
-
-      // reset();
-      setSnackbar({
-        open: true,
-        message: "Message sent! I'll be in touch soon.",
-        severity: "success",
-      });
+      if (response.ok) {
+        setSnackbar({
+          open: true,
+          message: "Message sent! I'll be in touch soon.",
+          severity: "success",
+        });
+        reset();
+      }
     } catch (error) {
       setSnackbar({
         open: true,
