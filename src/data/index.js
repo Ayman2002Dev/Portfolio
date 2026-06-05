@@ -10,26 +10,6 @@ import leonImage from "../../public/images/leon.webp";
 import noPreviewImage from "../../public/images/nopreview.webp";
 import myWebsiteImage from "../../public/images/mywebsite.webp";
 
-export const NAV_LINKS = [
-  { label: "About", path: "/" },
-  { label: "Resume", path: "/resume" },
-  { label: "Work", path: "/work" },
-  { label: "Contact", path: "/contact" },
-];
-
-export const SOCIAL_LINKS = [
-  { label: "GitHub", href: "https://github.com" },
-  { label: "LinkedIn", href: "https://linkedin.com" },
-  { label: "Twitter", href: "https://twitter.com" },
-  { label: "Email", href: "mailto:hello@ayman.osama.dev" },
-];
-
-export const HERO_IMAGE =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBrlQyy2vMJ90IHPmFOIPuDweMuSTjDXD7FYv8rojwwo6KHP_XXPtg8kuBRh4Hhsb8DYsT6Vy0me62BFHK9OEHYWRL0wTbdv8s9hAHYF-BbXWqgi4Qx2KYH3gP4Gk-QSrFCTlxc_UDn6tt8ra0of74xB-gVaFXPxj4fu3gfk5w5yzmEwTx_Ir8KcsWqo6VtuqtD7t-5HHnUhSJfQO5zxj11KnOW6w2m2Rp0B9OozFRfeNsiF8YJIk1lenv038ywqIl1RtSp8FQ_smY";
-
-export const PROFILE_IMAGE =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBgkK01yItL8Zw2ABzuuSZzrKOKUvneZkoMMPApkkkea7LFEfi0OmgEST0q5EXk6CAu4JhHo4QJINQCTY8im1R76DRxQpoGisUatLiesHTa4Ud8Kmw8Qrq9HAQoExsEZo4jFF0HprwXZiFoiKV9HS7S4c1RjTaJWe6Gs8mYKv55y46TIlQ1VZSGZuz5Qo-iyGECD6zuwT14--GJlx8hmAsXdO0xciF7oHUdjjAP4m4LmH4vi7TW0D6Uph3QqsH0fgPSEB1O_BSyc3E";
-
 export const PROJECTS = [
   {
     id: 1,
@@ -39,6 +19,8 @@ export const PROJECTS = [
     tags: ["React", "RHF", "MUI"],
     keyword: "react",
     image: myWebsiteImage,
+    imageWidth: 1363,
+    imageHeight: 648,
     liveLink: "https://ayman-osama.vercel.app/",
     githubLink: "https://github.com/Ayman2002Dev/Portfolio",
   },
@@ -50,6 +32,8 @@ export const PROJECTS = [
     tags: ["React", "RHF", "MUI", "Redux", "Swiper"],
     keyword: "react",
     image: veloriaImage,
+    imageWidth: 1348,
+    imageHeight: 650,
     liveLink: "https://veloria-two.vercel.app/",
     githubLink: "https://github.com/Ayman2002Dev/Veloria",
   },
@@ -61,6 +45,8 @@ export const PROJECTS = [
     tags: ["React", "Swiper", "Tailwind Css", "Redux", "Axios"],
     keyword: "react",
     image: cinemaScopeImage,
+    imageWidth: 1361,
+    imageHeight: 648,
     liveLink: "https://cinema-scope-omega.vercel.app/?page=1",
     githubLink: "https://github.com/Ayman2002Dev/Cinema-Scope",
   },
@@ -73,6 +59,8 @@ export const PROJECTS = [
     tags: ["React", "boxicons"],
     keyword: "react",
     image: windflowImage,
+    imageWidth: 1004,
+    imageHeight: 647,
     liveLink: "https://wind-flow-steel.vercel.app/",
     githubLink: "https://github.com/Ayman2002Dev/WindFlow",
   },
@@ -84,6 +72,8 @@ export const PROJECTS = [
     tags: ["Html", "Css", "JavaScript"],
     keyword: "javascript",
     image: ticTacToeImage,
+    imageWidth: 1018,
+    imageHeight: 647,
     liveLink: "https://ayman2002dev.github.io/Tic-Tac-Toe/",
     githubLink: "https://github.com/Ayman2002Dev/Tic-Tac-Toe",
   },
@@ -107,6 +97,8 @@ export const PROJECTS = [
     ],
     keyword: "node",
     image: noPreviewImage,
+    imageWidth: 512,
+    imageHeight: 512,
     liveLink: "#",
     githubLink: "https://github.com/Ayman2002Dev/Ecommerce-api/tree/main",
   },
@@ -118,6 +110,8 @@ export const PROJECTS = [
     tags: ["Html", "Css", "JavaScript"],
     keyword: "javascript",
     image: todoListImage,
+    imageWidth: 1366,
+    imageHeight: 648,
     liveLink: "https://ayman2002dev.github.io/to-do-drag-and-drop/",
     githubLink: "https://github.com/Ayman2002Dev/to-do-drag-and-drop",
   },
@@ -129,6 +123,8 @@ export const PROJECTS = [
     tags: ["Html", "Css", "TypeScript"],
     keyword: "typescript",
     image: ProductMSImage,
+    imageWidth: 1351,
+    imageHeight: 647,
     liveLink: "https://ayman2002dev.github.io/Product-Management-System/",
     githubLink: "https://ayman2002dev.github.io/Product-Management-System/",
   },
@@ -140,6 +136,8 @@ export const PROJECTS = [
     tags: ["Html", "Css"],
     keyword: "html&css",
     image: storyImage,
+    imageWidth: 1352,
+    imageHeight: 647,
     liveLink: "https://ayman2002dev.github.io/Story-website/",
     githubLink: "https://github.com/Ayman2002Dev/Story-website",
   },
@@ -150,8 +148,9 @@ export const PROJECTS = [
       "A demo project to improve my web design skills and gain practical experience.",
     tags: ["Html", "Css"],
     keyword: "html&css",
-    keyword: "html&css",
     image: kasperImage,
+    imageWidth: 1348,
+    imageHeight: 646,
     liveLink: "https://ayman2002dev.github.io/Kasper/",
     githubLink: "https://github.com/Ayman2002Dev/Kasper",
   },
@@ -163,6 +162,8 @@ export const PROJECTS = [
     tags: ["Html", "Css"],
     keyword: "html&css",
     image: leonImage,
+    imageWidth: 1349,
+    imageHeight: 648,
     liveLink: "https://ayman2002dev.github.io/Leon/",
     githubLink: "https://github.com/Ayman2002Dev/Leon",
   },
@@ -174,6 +175,8 @@ export const PROJECTS = [
     tags: ["Html", "Css", "JavaScript", "Flask", "Machine Learning", "My SQL"],
     keyword: "javascript",
     image: noPreviewImage,
+    imageWidth: 512,
+    imageHeight: 512,
     liveLink: "#",
     githubLink: "https://github.com/Ayman2002Dev/Tracer-Project",
   },
@@ -340,3 +343,4 @@ export const SOCIAL_CHANNELS = [
     color: "#a3aac4",
   },
 ];
+

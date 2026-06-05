@@ -1,148 +1,127 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { useCallback, useMemo, useState } from "react";
 import { FeaturedProjectCard } from "../components/ui/ProjectCard";
-import SectionLabel from "../components/ui/SectionLabel";
+import PageSection from "../components/layout/PageSection";
+import SectionHeader from "../components/ui/SectionHeader";
 import { PROJECTS } from "../data";
-import { useEffect, useState } from "react";
+import { useTranslations } from "../providers/i18nState";
 
-const tabs = ["All", "Html&Css", "JavaScript", "TypeScript", "React", "Node"];
+const FILTERS = [
+  { value: "all", labelKey: "all" },
+  { value: "html&css", labelKey: "htmlCss" },
+  { value: "javascript", labelKey: "javascript" },
+  { value: "typescript", labelKey: "typescript" },
+  { value: "react", labelKey: "react" },
+  { value: "node", labelKey: "node" },
+];
 
 export default function WorkPage() {
   const [projectsView, setProjectsView] = useState(6);
-  const [tabIndex, setTabIndex] = useState(0);
-  const [projectsVisiable, setprojectsVisiable] = useState(
-    PROJECTS.slice(0, projectsView),
-  );
+  const [filter, setFilter] = useState("all");
+  const { t } = useTranslations();
 
-  const handleShowMore = () => {
+  const handleShowMore = useCallback(() => {
     setProjectsView((prev) => prev + 5);
-  };
+  }, []);
 
-  const handleFilter = (index) => {
-    setTabIndex(index);
-  };
-
-  useEffect(() => {
-    if (tabIndex === 0) {
-      setprojectsVisiable(PROJECTS.slice(0, projectsView));
-      return;
+  const handleFilter = useCallback((_, nextFilter) => {
+    if (nextFilter !== null) {
+      setFilter(nextFilter);
+      setProjectsView(6);
     }
+  }, []);
 
-    const projects = PROJECTS.filter(
-      (project) =>
-        project.keyword.toLowerCase() === tabs[tabIndex].toLowerCase(),
-    );
-    setprojectsVisiable(projects.slice(0, projectsView));
-  }, [projectsView, tabIndex]);
+  const projectsVisible = useMemo(() => {
+    const filteredProjects =
+      filter === "all"
+        ? PROJECTS
+        : PROJECTS.filter(
+            (project) => project.keyword.toLowerCase() === filter,
+          );
+
+    return filteredProjects.slice(0, projectsView);
+  }, [filter, projectsView]);
 
   return (
-    <Box
-      id="work"
-      sx={{
-        pt: { xs: 12, md: 16 },
-        pb: { xs: 8, md: 12 },
-        px: { xs: 1.5, md: 4 },
-        backgroundImage: `
-          radial-gradient(circle at 0% 0%, rgba(163,166,255,0.05) 0%, transparent 50%),
-          radial-gradient(circle at 100% 100%, rgba(193,128,255,0.05) 0%, transparent 50%)
-        `,
-        minHeight: "100vh",
-      }}
-    >
-      <Container maxWidth="xl" sx={{ maxWidth: "80rem !important" }}>
-        {/* Page Header */}
-        <Box component="header" sx={{ mb: { xs: 10, md: 14 } }}>
-          <SectionLabel>Portfolio</SectionLabel>
-          <Typography
-            component="h1"
-            sx={{
-              fontFamily: '"Space Grotesk", sans-serif',
-              fontWeight: 700,
-              fontSize: { xs: "3rem", md: "5rem" },
-              letterSpacing: "-0.05em",
-              color: "#dee5ff",
-              mb: 3,
-              lineHeight: 1,
-            }}
-          >
-            Explore My{" "}
+    <PageSection id="work" variant="soft">
+      <SectionHeader
+        eyebrow={t("work.eyebrow")}
+        component="h1"
+        title={
+          <>
+            {t("work.titlePrefix")}{" "}
             <Box component="span" sx={{ color: "#6063ee" }}>
-              Works
+              {t("work.titleAccent")}
             </Box>
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: '"Plus Jakarta Sans", sans-serif',
-              fontSize: "1.125rem",
-              color: "#a3aac4",
-              maxWidth: "42rem",
-              lineHeight: 1.75,
-            }}
-          >
-            A collection of projects showcasing my work in building responsive,
-            user-friendly web applications. Each project reflects clean code,
-            practical problem-solving, and attention to performance and
-            maintainability.
-          </Typography>
-        </Box>
+          </>
+        }
+        description={t("work.description")}
+      />
 
-        {/* Projects Bento Grid */}
+      {/* Projects Bento Grid */}
+      <Box sx={{ mb: { xs: 1, md: 2 } }}>
+        {/* Projects Filter */}
         <Box
           sx={{
-            mb: { xs: 1, md: 2 },
+            mb: 5,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflowX: "auto",
           }}
         >
-          {/* Projects Filter */}
-          <Box
+          <ToggleButtonGroup
+            value={filter}
+            exclusive
+            onChange={handleFilter}
+            aria-label={t("work.filtersLabel")}
             sx={{
-              mb: 5,
-              display: "flex",
               flexWrap: "wrap",
-              gap: "15px",
               justifyContent: "center",
-              alignItems: "center",
+              gap: 1.5,
+              "& .MuiToggleButtonGroup-grouped": {
+                border: "1px solid var(--app-border)",
+                borderRadius: "9999px !important",
+                px: 2,
+                py: 1,
+                color: "var(--app-text)",
+                textTransform: "none",
+                fontFamily: '"Manrope", sans-serif',
+                fontWeight: 700,
+                letterSpacing: "0.01em",
+              },
             }}
           >
-            {tabs.map((tab, index) => (
-              <Button
-                disableRipple
-                onClick={() => handleFilter(index)}
-                key={tab}
-                sx={{
-                  bgcolor: tabIndex === index ? "#0f1930" : "transparent",
-                  color: "white",
-                  transition: "color 0.3s ease",
-                  "&:hover": { color: "#a3a6ff" },
-                }}
-              >
-                {tab}
-              </Button>
+            {FILTERS.map((item) => (
+              <ToggleButton key={item.value} value={item.value}>
+                {t(`work.filters.${item.labelKey}`)}
+              </ToggleButton>
             ))}
-          </Box>
-          <Grid container spacing={4} sx={{ alignItems: "stretch" }}>
-            {/* Featured Project 1 — 8 cols */}
-            {projectsVisiable.map((project) => (
-              <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
-                <FeaturedProjectCard project={project} />
-              </Grid>
-            ))}
-          </Grid>
-          {projectsView <= projectsVisiable.length && (
-            <Button
-              variant="contained"
-              sx={{
-                display: "block",
-                borderRadius: "9999px",
-                mt: 5,
-                maxWidth: "106.88px",
-                mx: "auto",
-              }}
-              onClick={handleShowMore}
-            >
-              Show More
-            </Button>
-          )}
+          </ToggleButtonGroup>
         </Box>
-      </Container>
-    </Box>
+        <Grid container spacing={4} sx={{ alignItems: "stretch" }}>
+          {projectsVisible.map((project) => (
+            <Grid key={project.id} size={{ xs: 12, sm: 6, lg: 4 }}>
+              <FeaturedProjectCard project={project} />
+            </Grid>
+          ))}
+        </Grid>
+        {projectsVisible.length === projectsView && (
+          <Button
+            variant="contained"
+            sx={{
+              display: "block",
+              borderRadius: "9999px",
+              mt: 5,
+              maxWidth: "106.88px",
+              mx: "auto",
+            }}
+            onClick={handleShowMore}
+          >
+            {t("common.showMore")}
+          </Button>
+        )}
+      </Box>
+    </PageSection>
   );
 }

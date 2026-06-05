@@ -1,6 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 export default function TechChip({ label }) {
+  const theme = useTheme();
+  const isLight = theme.palette.mode === 'light';
+
   return (
     <Box
       sx={{
@@ -9,9 +12,9 @@ export default function TechChip({ label }) {
         gap: 0.75,
         px: 1.5,
         py: 0.5,
-        backgroundColor: '#091328',
+        backgroundColor: 'var(--app-chip-bg)',
         borderRadius: '9999px',
-        border: '1px solid rgba(64, 72, 93, 0.1)',
+        border: '1px solid var(--app-border)',
       }}
     >
       <Box
@@ -19,7 +22,7 @@ export default function TechChip({ label }) {
           width: 4,
           height: 4,
           borderRadius: '50%',
-          backgroundColor: '#c890ff',
+          backgroundColor: isLight ? '#6063ee' : '#c890ff',
           flexShrink: 0,
         }}
       />
@@ -30,7 +33,7 @@ export default function TechChip({ label }) {
           fontWeight: 700,
           letterSpacing: '0.05em',
           textTransform: 'uppercase',
-          color: '#dee5ff',
+          color: 'var(--app-text)',
           lineHeight: 1,
         }}
       >
