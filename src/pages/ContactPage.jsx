@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Alert,
   Box,
   Button,
   CircularProgress,
-  Container,
   Grid,
   Snackbar,
   TextField,
@@ -19,7 +18,12 @@ import ChatIcon from "@mui/icons-material/Chat";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
 import SendIcon from "@mui/icons-material/Send";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { motion, useReducedMotion } from "framer-motion";
 import { SOCIAL_CHANNELS } from "../data";
+import PageSection from "../components/layout/PageSection";
+import SectionHeader from "../components/ui/SectionHeader";
+import AppCard from "../components/ui/AppCard";
+import { useTranslations } from "../providers/i18nState";
 
 const SOCIAL_ICON_MAP = {
   code: CodeIcon,
@@ -28,64 +32,117 @@ const SOCIAL_ICON_MAP = {
   rss_feed: RssFeedIcon,
 };
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const columnVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.65,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const floatVariants = {
+  animate: {
+    y: [0, -14, 0],
+    x: [0, 10, 0],
+    scale: [1, 1.04, 1],
+    transition: {
+      duration: 10,
+      repeat: Infinity,
+      repeatType: "mirror",
+      ease: "easeInOut",
+    },
+  },
+};
+
 const inputSx = {
   "& .MuiInput-root": {
-    color: "#dee5ff",
+    color: "var(--app-text)",
     fontFamily: '"Plus Jakarta Sans", sans-serif',
+    transition: "transform 0.25s ease, color 0.25s ease",
+    "&:hover": {
+      color: "var(--app-text)",
+    },
+    "&.Mui-focused": {
+      transform: "translateY(-1px)",
+    },
   },
-  "& .MuiInput-underline:before": { borderBottomColor: "rgba(64,72,93,0.4)" },
+  "& .MuiInput-underline:before": {
+    borderBottomColor: "var(--app-input-border)",
+    transition: "border-bottom-color 0.25s ease",
+  },
   "& .MuiInput-underline:hover:before": {
-    borderBottomColor: "rgba(64,72,93,0.6) !important",
+    borderBottomColor: "var(--app-input-border-hover) !important",
   },
-  "& .MuiInput-underline:after": { borderBottomColor: "#a3a6ff" },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "var(--app-input-border-focus)",
+    transition: "border-bottom-color 0.25s ease",
+  },
   "& .MuiInputLabel-root": {
-    color: "#a3aac4",
+    color: "var(--app-input-label)",
     fontFamily: '"Plus Jakarta Sans", sans-serif',
+    transition: "color 0.25s ease, transform 0.25s ease",
   },
-  "& .MuiInputLabel-root.Mui-focused": { color: "#a3a6ff" },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "var(--app-input-border-focus)",
+  },
   "& .MuiInputLabel-root.Mui-error": { color: "#ff6e84" },
   "& .MuiInput-underline.Mui-error:after": { borderBottomColor: "#ff6e84" },
   "& .MuiFormHelperText-root": {
     fontFamily: '"Manrope", sans-serif',
     fontSize: "0.75rem",
+    marginLeft: 0,
   },
 };
 
-const cardBase = {
-  backgroundColor: "#0f1930",
-  border: "1px solid rgba(64,72,93,0.15)",
-  borderRadius: "1.5rem",
-  transition: "all 0.4s ease",
-  "&:hover": {
-    backgroundColor: "#192540",
-    border: "1px solid rgba(163,166,255,0.2)",
-  },
-};
-
-function ContactInfoCard({
-  icon,
-  title,
-  description,
-  link,
-  linkLabel,
-  color = "#a3a6ff",
-}) {
+function ContactInfoCard({ icon, title, description, link, linkLabel, color = "#a3a6ff" }) {
   const Icon = icon;
+
   return (
-    <Box
-      id="contact"
+    <AppCard
+      component={motion.div}
+      variants={itemVariants}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       sx={{
-        ...cardBase,
         p: { xs: 3.5, md: 4 },
         position: "relative",
         overflow: "hidden",
       }}
     >
       <Box
+        aria-hidden="true"
         sx={{
           position: "absolute",
           top: 0,
-          right: 0,
+          insetInlineEnd: 0,
           width: 128,
           height: 128,
           backgroundColor: `${color}0d`,
@@ -101,7 +158,7 @@ function ContactInfoCard({
             width: 48,
             height: 48,
             borderRadius: "0.75rem",
-            backgroundColor: "#141f38",
+            backgroundColor: "var(--app-surface-3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -114,7 +171,7 @@ function ContactInfoCard({
             fontFamily: '"Space Grotesk", sans-serif',
             fontWeight: 700,
             fontSize: "1.125rem",
-            color: "#dee5ff",
+            color: "var(--app-text)",
           }}
         >
           {title}
@@ -123,7 +180,7 @@ function ContactInfoCard({
       <Typography
         sx={{
           fontFamily: '"Plus Jakarta Sans", sans-serif',
-          color: "#a3aac4",
+          color: "var(--app-text-secondary)",
           mb: 1.5,
         }}
       >
@@ -139,34 +196,46 @@ function ContactInfoCard({
             fontSize: "1.0625rem",
             color,
             textDecoration: "none",
+            transition: "color 0.25s ease, text-decoration-color 0.25s ease",
             "&:hover": {
               textDecoration: "underline",
               textDecorationColor: `${color}50`,
+            },
+            "&:focus-visible": {
+              outline: "2px solid var(--app-input-border-focus)",
+              outlineOffset: 3,
+              borderRadius: "0.25rem",
             },
           }}
         >
           {linkLabel}
         </Typography>
       )}
-    </Box>
+    </AppCard>
   );
 }
 
 function AvailabilityCard() {
+  const { t } = useTranslations();
+
   return (
-    <Box
+    <AppCard
+      component={motion.div}
+      variants={itemVariants}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       sx={{
-        ...cardBase,
         p: { xs: 3.5, md: 4 },
         position: "relative",
         overflow: "hidden",
       }}
     >
       <Box
+        aria-hidden="true"
         sx={{
           position: "absolute",
           top: 0,
-          right: 0,
+          insetInlineEnd: 0,
           width: 128,
           height: 128,
           backgroundColor: "rgba(193,128,255,0.05)",
@@ -182,7 +251,7 @@ function AvailabilityCard() {
             width: 48,
             height: 48,
             borderRadius: "0.75rem",
-            backgroundColor: "#141f38",
+            backgroundColor: "var(--app-surface-3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -195,25 +264,23 @@ function AvailabilityCard() {
             fontFamily: '"Space Grotesk", sans-serif',
             fontWeight: 700,
             fontSize: "1.125rem",
-            color: "#dee5ff",
+            color: "var(--app-text)",
           }}
         >
-          Availability
+          {t("contact.availabilityTitle")}
         </Typography>
       </Box>
       <Typography
         sx={{
           fontFamily: '"Plus Jakarta Sans", sans-serif',
-          color: "#a3aac4",
+          color: "var(--app-text-secondary)",
           mb: 2,
         }}
       >
-        Sat – Thu • 9 AM – 10 PM
+        {t("contact.availabilityHours")}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <FiberManualRecordIcon
-          sx={{ color: "#c890ff", fontSize: "0.875rem" }}
-        />
+        <FiberManualRecordIcon sx={{ color: "#c890ff", fontSize: "0.875rem" }} />
         <Typography
           sx={{
             fontFamily: '"Manrope", sans-serif',
@@ -222,10 +289,10 @@ function AvailabilityCard() {
             fontWeight: 600,
           }}
         >
-          Open to new projects
+          {t("contact.openToProjects")}
         </Typography>
       </Box>
-    </Box>
+    </AppCard>
   );
 }
 
@@ -236,6 +303,8 @@ export default function ContactPage() {
     message: "",
     severity: "success",
   });
+  const { t } = useTranslations();
+  const reduceMotion = useReducedMotion();
 
   const {
     register,
@@ -244,105 +313,136 @@ export default function ContactPage() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      const formData = new FormData();
-      Object.keys(data).forEach((key) => {
-        formData.append(key, data[key]);
-      });
+  const onSubmit = useCallback(
+    async (data) => {
+      try {
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key]);
+        });
 
-      setSubmitting(true);
-      const response = await fetch(
-        "https://hooks.zapier.com/hooks/catch/27009778/u7tezl2/",
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
-      if (response.ok) {
+        setSubmitting(true);
+        const response = await fetch(
+          "https://hooks.zapier.com/hooks/catch/27009778/u7tezl2/",
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
+        if (response.ok) {
+          setSnackbar({
+            open: true,
+            message: t("contact.snackbarSuccess"),
+            severity: "success",
+          });
+          reset();
+        }
+      } catch {
         setSnackbar({
           open: true,
-          message: "Message sent! I'll be in touch soon.",
-          severity: "success",
+          message: t("contact.snackbarError"),
+          severity: "error",
         });
-        reset();
+      } finally {
+        setSubmitting(false);
       }
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: "Faild to send message. Please try again later.",
-        severity: "error",
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    },
+    [reset, t],
+  );
 
   return (
-    <Box
-      id="contact"
-      sx={{
-        pt: { xs: 12, md: 16 },
-        pb: { xs: 8, md: 12 },
-        px: { xs: 1.5, md: 4 },
-        minHeight: "100vh",
-        backgroundImage: `
-          radial-gradient(circle at 0% 0%, rgba(163,166,255,0.04) 0%, transparent 50%),
-          radial-gradient(circle at 100% 100%, rgba(193,128,255,0.04) 0%, transparent 50%)
-        `,
-      }}
-    >
-      <Container maxWidth="xl" sx={{ maxWidth: "80rem !important" }}>
-        {/* Page Header */}
+    <PageSection id="contact" variant="default" sx={{ minHeight: "100vh" }}>
+      <Box
+        aria-hidden="true"
+        sx={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          overflow: "hidden",
+        }}
+      >
         <Box
-          component="header"
-          sx={{ mb: { xs: 10, md: 14 }, textAlign: "center" }}
-        >
-          <Typography
-            component="h1"
-            sx={{
-              fontFamily: '"Space Grotesk", sans-serif',
-              fontWeight: 700,
-              fontSize: { xs: "3rem", md: "5rem" },
-              letterSpacing: "-0.05em",
-              color: "#dee5ff",
-              mb: 3,
-              lineHeight: 1,
-            }}
-          >
-            Let's Build{" "}
-            <Box
-              component="span"
-              sx={{
-                backgroundImage: "linear-gradient(135deg, #a3a6ff, #c180ff)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              Something
-            </Box>
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: '"Plus Jakarta Sans", sans-serif',
-              fontSize: "1.125rem",
-              color: "#a3aac4",
-              maxWidth: "36rem",
-              mx: "auto",
-              lineHeight: 1.75,
-            }}
-          >
-            Have a project in mind, or just want to talk tech? My inbox is
-            always open.
-          </Typography>
-        </Box>
+          component={motion.div}
+          aria-hidden="true"
+          animate={reduceMotion ? undefined : "animate"}
+          variants={reduceMotion ? undefined : floatVariants}
+          sx={{
+            position: "absolute",
+            top: { xs: 40, md: 20 },
+            insetInlineStart: { xs: -80, md: 80 },
+            width: { xs: 220, md: 320 },
+            height: { xs: 220, md: 320 },
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(163,166,255,0.18) 0%, rgba(193,128,255,0.08) 35%, transparent 72%)",
+            filter: "blur(18px)",
+            opacity: 0.7,
+          }}
+        />
+        <Box
+          component={motion.div}
+          aria-hidden="true"
+          animate={reduceMotion ? undefined : { y: [0, 16, 0], x: [0, -10, 0] }}
+          transition={
+            reduceMotion
+              ? undefined
+              : {
+                  duration: 12,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }
+          }
+          sx={{
+            position: "absolute",
+            right: { xs: -100, md: 120 },
+            bottom: { xs: 220, md: 80 },
+            width: { xs: 260, md: 420 },
+            height: { xs: 260, md: 420 },
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(77,84,255,0.16) 0%, rgba(193,128,255,0.08) 38%, transparent 72%)",
+            filter: "blur(24px)",
+            opacity: 0.65,
+          }}
+        />
+      </Box>
 
-        {/* Main Content Bento Grid */}
+      <Box
+        component={motion.div}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.18 }}
+        variants={sectionVariants}
+        sx={{ position: "relative", zIndex: 1 }}
+      >
+        <SectionHeader
+          align="center"
+          component="h1"
+          title={
+            <>
+              {t("contact.titlePrefix")}{" "}
+              <Box
+                component="span"
+                sx={{
+                  backgroundImage: "linear-gradient(135deg, #a3a6ff, #c180ff)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                {t("contact.titleAccent")}
+              </Box>
+            </>
+          }
+          description={t("contact.description")}
+        />
+
         <Grid container spacing={4} sx={{ alignItems: "stretch" }}>
-          {/* Left Column — Contact channels */}
           <Grid size={{ xs: 12, lg: 5 }}>
             <Box
+              component={motion.div}
+              variants={columnVariants}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -352,23 +452,26 @@ export default function ContactPage() {
             >
               <ContactInfoCard
                 icon={EmailIcon}
-                title="Direct Email"
-                description="Typically replies within 24 hours."
+                title={t("contact.directEmailTitle")}
+                description={t("contact.directEmailDescription")}
                 link="mailto:ayman.osama.dev@gmail.com"
                 linkLabel="ayman.osama.dev@gmail.com"
                 color="#a3a6ff"
               />
               <AvailabilityCard />
 
-              {/* Social Links Grid */}
               <Grid container spacing={2}>
                 {SOCIAL_CHANNELS.map((channel) => {
                   const Icon = SOCIAL_ICON_MAP[channel.icon] || CodeIcon;
+
                   return (
                     <Grid size={{ xs: 12, md: 6 }} key={channel.label}>
                       <Box
-                        component="a"
+                        component={motion.a}
                         href={channel.href}
+                        whileHover={reduceMotion ? undefined : { y: -5, scale: 1.01 }}
+                        whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
                         sx={{
                           display: "flex",
                           flexDirection: "column",
@@ -377,25 +480,30 @@ export default function ContactPage() {
                           gap: 1.5,
                           p: 3,
                           borderRadius: "1.25rem",
-                          backgroundColor: "#091328",
+                          backgroundColor: "var(--app-surface-1)",
                           border: "1px solid transparent",
                           textDecoration: "none",
-                          transition: "all 0.4s ease",
+                          transition:
+                            "transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
+                          boxShadow: "0 0 0 rgba(0,0,0,0)",
                           "&:hover": {
-                            backgroundColor: "#1f2b49",
+                            backgroundColor: "var(--app-surface-4)",
                             borderColor: `${channel.color}33`,
+                            boxShadow: "0 18px 36px rgba(15, 23, 42, 0.08)",
+                          },
+                          "&:focus-visible": {
+                            outline: "2px solid var(--app-input-border-focus)",
+                            outlineOffset: 3,
                           },
                         }}
                       >
-                        <Icon
-                          sx={{ color: channel.color, fontSize: "1.75rem" }}
-                        />
+                        <Icon sx={{ color: channel.color, fontSize: "1.75rem" }} />
                         <Typography
                           sx={{
                             fontFamily: '"Manrope", sans-serif',
                             fontWeight: 700,
                             fontSize: "0.875rem",
-                            color: "#dee5ff",
+                            color: "var(--app-text)",
                           }}
                         >
                           {channel.label}
@@ -404,7 +512,7 @@ export default function ContactPage() {
                           sx={{
                             fontFamily: '"Plus Jakarta Sans", sans-serif',
                             fontSize: "0.75rem",
-                            color: "#a3aac4",
+                            color: "var(--app-text-secondary)",
                             textAlign: "center",
                           }}
                         >
@@ -418,23 +526,34 @@ export default function ContactPage() {
             </Box>
           </Grid>
 
-          {/* Right Column — Contact Form */}
-          <Grid item size={{ xs: 12, lg: 7 }}>
-            <Box
+          <Grid size={{ xs: 12, lg: 7 }}>
+            <AppCard
+              component={motion.div}
+              variants={columnVariants}
+              whileHover={reduceMotion ? undefined : { y: -4 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
               sx={{
-                ...cardBase,
                 p: { xs: 4, md: 6 },
                 height: "100%",
                 position: "relative",
                 overflow: "hidden",
               }}
             >
-              {/* Decorative glow */}
               <Box
+                component={motion.div}
+                aria-hidden="true"
+                animate={
+                  reduceMotion ? undefined : { scale: [1, 1.08, 1], opacity: [0.55, 0.82, 0.55] }
+                }
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 12, repeat: Infinity, ease: "easeInOut" }
+                }
                 sx={{
                   position: "absolute",
                   bottom: -96,
-                  right: -96,
+                  insetInlineEnd: -96,
                   width: 384,
                   height: 384,
                   backgroundColor: "rgba(163,166,255,0.10)",
@@ -453,47 +572,43 @@ export default function ContactPage() {
                       fontWeight: 700,
                       fontSize: { xs: "1.75rem", md: "2rem" },
                       mb: 1,
-                      color: "#dee5ff",
+                      color: "var(--app-text)",
                     }}
                   >
-                    Send a Message
+                    {t("contact.formTitle")}
                   </Typography>
                   <Typography
                     sx={{
                       fontFamily: '"Plus Jakarta Sans", sans-serif',
-                      color: "#a3aac4",
+                      color: "var(--app-text-secondary)",
                     }}
                   >
-                    I'm excited to hear about your project goals.
+                    {t("contact.formSubtitle")}
                   </Typography>
                 </Box>
 
-                <Box
-                  component="form"
-                  onSubmit={handleSubmit(onSubmit)}
-                  noValidate
-                >
+                <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
                   <Grid container spacing={4}>
                     <Grid size={{ xs: 12, md: 6 }}>
                       <TextField
-                        label="Your Name"
+                        label={t("contact.form.name")}
                         variant="standard"
                         fullWidth
                         error={!!errors.name}
                         helperText={errors.name?.message}
                         sx={inputSx}
                         {...register("name", {
-                          required: "Name is required",
+                          required: t("contact.form.errors.nameRequired"),
                           minLength: {
                             value: 2,
-                            message: "Name must be at least 2 characters",
+                            message: t("contact.form.errors.nameLength"),
                           },
                         })}
                       />
                     </Grid>
                     <Grid size={{ xs: 12, md: 6 }}>
                       <TextField
-                        label="Email Address"
+                        label={t("contact.form.email")}
                         variant="standard"
                         fullWidth
                         type="email"
@@ -501,30 +616,30 @@ export default function ContactPage() {
                         helperText={errors.email?.message}
                         sx={inputSx}
                         {...register("email", {
-                          required: "Email is required",
+                          required: t("contact.form.errors.emailRequired"),
                           pattern: {
                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: "Enter a valid email address",
+                            message: t("contact.form.errors.emailValid"),
                           },
                         })}
                       />
                     </Grid>
                     <Grid size={12}>
                       <TextField
-                        label="Subject"
+                        label={t("contact.form.subject")}
                         variant="standard"
                         fullWidth
                         error={!!errors.subject}
                         helperText={errors.subject?.message}
                         sx={inputSx}
                         {...register("subject", {
-                          required: "Subject is required",
+                          required: t("contact.form.errors.subjectRequired"),
                         })}
                       />
                     </Grid>
                     <Grid size={12}>
                       <TextField
-                        label="Your Message"
+                        label={t("contact.form.message")}
                         variant="standard"
                         fullWidth
                         multiline
@@ -539,15 +654,15 @@ export default function ContactPage() {
                           },
                         }}
                         {...register("message", {
-                          required: "Message is required",
+                          required: t("contact.form.errors.messageRequired"),
                           minLength: {
                             value: 20,
-                            message: "Message must be at least 20 characters",
+                            message: t("contact.form.errors.messageLength"),
                           },
                         })}
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                       <Button
                         type="submit"
                         variant="contained"
@@ -569,27 +684,41 @@ export default function ContactPage() {
                           fontSize: "1rem",
                           backgroundColor: "#a3a6ff",
                           color: "#0f00a4",
+                          transform: "translateY(0)",
+                          boxShadow: "0 0 0 rgba(0,0,0,0)",
                           "&:hover": {
                             backgroundColor: "#6063ee",
-                            boxShadow: "0 0 20px rgba(163,166,255,0.25)",
+                            boxShadow: "0 14px 28px rgba(163,166,255,0.22)",
+                            transform: "translateY(-1px)",
+                          },
+                          "&:active": {
+                            transform: "translateY(0)",
+                            boxShadow: "0 8px 16px rgba(163,166,255,0.14)",
+                          },
+                          "&:focus-visible": {
+                            outline: "2px solid var(--app-input-border-focus)",
+                            outlineOffset: 3,
                           },
                           "&:disabled": {
                             backgroundColor: "rgba(163,166,255,0.3)",
                             color: "rgba(15,0,164,0.5)",
                           },
-                          transition: "all 0.4s ease",
+                          transition:
+                            "transform 0.22s ease, background-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease",
                         }}
                       >
-                        {submitting ? "Sending..." : "Send Message"}
+                        {submitting
+                          ? t("contact.form.sending")
+                          : t("contact.form.submit")}
                       </Button>
                     </Grid>
                   </Grid>
                 </Box>
               </Box>
-            </Box>
+            </AppCard>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
 
       <Snackbar
         open={snackbar.open}
@@ -602,14 +731,14 @@ export default function ContactPage() {
           onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
           sx={{
             fontFamily: '"Plus Jakarta Sans", sans-serif',
-            backgroundColor: "#0f1930",
-            color: "#dee5ff",
-            border: "1px solid rgba(64,72,93,0.3)",
+            backgroundColor: "var(--app-snackbar-bg)",
+            color: "var(--app-text)",
+            border: "1px solid var(--app-border-strong)",
           }}
         >
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
+    </PageSection>
   );
 }

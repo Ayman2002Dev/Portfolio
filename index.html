@@ -2,9 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="./public//images/mylogo-rbg.png" />
+    <meta name="theme-color" content="#060e20" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/dist/images/logo.jpg" />
     <title>Ayman Osama | Frontend Developer</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("portfolio-theme-mode");
+          var theme = stored === "light" ? "light" : "dark";
+          var root = document.documentElement;
+          root.dataset.theme = theme;
+          root.style.colorScheme = theme;
+          var isLight = theme === "light";
+          root.style.setProperty(
+            "--app-background",
+            isLight ? "#f7f8fc" : "#060e20",
+          );
+          root.style.setProperty("--app-text", isLight ? "#101828" : "#dee5ff");
+          root.style.setProperty(
+            "--app-scrollbar-track",
+            isLight ? "#f7f8fc" : "#060e20",
+          );
+          root.style.setProperty(
+            "--app-scrollbar-thumb",
+            isLight ? "#cbd5e1" : "#40485d",
+          );
+          root.style.setProperty(
+            "--app-scrollbar-thumb-hover",
+            isLight ? "#94a3b8" : "#6d758c",
+          );
+        } catch (error) {
+          // Ignore storage errors and fall back to the default dark theme.
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

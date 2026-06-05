@@ -1,0 +1,174 @@
+{
+  "navbar": {
+    "logoAlt": "Ayman Osama logo",
+    "languageSwitchLabel": "Switch language",
+    "themeSwitchLabel": "Toggle theme",
+    "openMenuLabel": "Open navigation menu",
+    "closeMenuLabel": "Close navigation menu"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "resume": "Resume",
+    "work": "Work",
+    "contact": "Contact"
+  },
+  "common": {
+    "resume": "Resume",
+    "showMore": "Show More",
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "hero": {
+    "badge": "Available for new ventures",
+    "lines": [
+      ["I'm", "Ayman", "Osama,"],
+      ["Software", "Engineer,"]
+    ],
+    "accent": "Frontend Developer",
+    "subtitle": "Building modern web experiences with React and Next.js, backed by solid Node.js skills.",
+    "ctaProjects": "View Projects",
+    "ctaContact": "Contact Me"
+  },
+  "work": {
+    "eyebrow": "Portfolio",
+    "titlePrefix": "Explore My",
+    "titleAccent": "Works",
+    "description": "A collection of projects showcasing my work in building responsive, user-friendly web applications. Each project reflects clean code, practical problem-solving, and attention to performance and maintainability.",
+    "filtersLabel": "Project filters",
+    "filters": {
+      "all": "All",
+      "htmlCss": "HTML and CSS",
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
+      "react": "React",
+      "node": "Node"
+    }
+  },
+  "project": {
+    "liveDemo": "Live Demo",
+    "github": "GitHub",
+    "explore": "Explore Project"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "I'm Ayman Osama, a Frontend Developer passionate about building modern and responsive web applications. I specialize in React, Next.js, and modern JavaScript libraries to create clean, user-friendly interfaces. I also have a solid intermediate understanding of backend development using Node.js, which helps me build full-stack projects. I'm skilled at problem-solving and enjoy turning ideas into real-world applications. I continuously work on improving my skills and staying up to date with the latest technologies to deliver efficient and scalable solutions.",
+    "tags": [
+      "Frontend Developer",
+      "Backend Developer",
+      "System Design",
+      "Modern Web Technologies",
+      "Responsive Web Apps"
+    ],
+    "profileName": "Ayman Osama",
+    "profileRole": "Frontend Developer",
+    "coreResumeTitle": "Core Resume",
+    "coreResumeText": "I specialize in React and Next.js, building interactive, responsive, and user-friendly interfaces. I focus on creating seamless experiences for users with clean, maintainable, and efficient code.",
+    "coreSkills": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Redux",
+      "MUI",
+      "RHF",
+      "Tailwind CSS",
+      "Vercel"
+    ],
+    "philosophyQuote": "I build software that works and feels intuitive. I focus on solving real problems for users, writing clean, maintainable code that makes their experience smoother.",
+    "learnMore": "Learn more about my process"
+  },
+  "resume": {
+    "heroTitlePrefix": "My Tech",
+    "heroTitleAccent": "Stack & Journey",
+    "heroDescription": "Here you can find a summary of my professional journey, including my education, key technical skills, and completed courses. This section highlights the experience and knowledge that shape the way I build user-friendly and efficient web applications.",
+    "skillsEyebrow": "Core Skills",
+    "skillsTitle": "Technical Arsenal",
+    "skills": {
+      "frontend": {
+        "title": "Frontend Engineering",
+        "subtitle": "Crafting immersive user experiences with modern frameworks.",
+        "items": [
+          "React / Next.js",
+          "TypeScript",
+          "Material-UI",
+          "React Hook Form",
+          "Redux Toolkit",
+          "React Router",
+          "Swiper.js",
+          "React Toastify",
+          "Tailwind CSS"
+        ]
+      },
+      "backend": {
+        "title": "Backend Engineering",
+        "subtitle": "Building robust, scalable systems for modern applications.",
+        "items": [
+          "Node.js / Express",
+          "Mongoose",
+          "JSON Web Token",
+          "Bcrypt"
+        ]
+      },
+      "tools": {
+        "title": "Tools",
+        "subtitle": "Utilizing cutting-edge tools to deliver high-performance and scalable solutions.",
+        "items": [
+          "Postman",
+          "Git",
+          "Vercel",
+          "Vite",
+          "Axios",
+          "Apidog"
+        ]
+      }
+    },
+    "educationEyebrow": "Learning Path",
+    "educationTitle": "Education",
+    "education": {
+      "degree": "Bachelor of Computer Science and Information Systems",
+      "period": "2020 - 2024",
+      "school": "Zagazig University",
+      "description": "Graduated with Very Good from the Information Systems department, with a strong focus on data"
+    },
+    "certificatesEyebrow": "Proof of Learning",
+    "certificatesTitle": "Verified Certificates"
+  },
+  "contact": {
+    "titlePrefix": "Let's Build",
+    "titleAccent": "Something",
+    "description": "Have a project in mind, or just want to talk tech? My inbox is always open.",
+    "directEmailTitle": "Direct Email",
+    "directEmailDescription": "Typically replies within 24 hours.",
+    "availabilityTitle": "Availability",
+    "availabilityHours": "Sat - Thu • 9 AM - 10 PM",
+    "openToProjects": "Open to new projects",
+    "formTitle": "Send a Message",
+    "formSubtitle": "I'm excited to hear about your project goals.",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "errors": {
+        "nameRequired": "Name is required",
+        "nameLength": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailValid": "Enter a valid email address",
+        "subjectRequired": "Subject is required",
+        "messageRequired": "Message is required",
+        "messageLength": "Message must be at least 20 characters"
+      }
+    },
+    "snackbarSuccess": "Message sent! I'll be in touch soon.",
+    "snackbarError": "Failed to send message. Please try again later."
+  },
+  "footer": {
+    "rights": "{year} Ayman Osama - Frontend Developer. All rights reserved."
+  }
+}
